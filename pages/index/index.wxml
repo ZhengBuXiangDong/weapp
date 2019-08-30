@@ -1,0 +1,38 @@
+<!-- 引入template -->
+<import src="../../utils/template.wxml"/>
+<!--index.wxml-->
+<view class="container">
+  <!-- 轮播图 -->
+  <swiper indicator-dots="{{true}}" autoplay="{{true}}" circular="{{true}}">
+    <swiper-item wx:for="{{imgUrls}}" wx:key="*this">
+      <image src="{{item.pic_huge}}" class="slide-image" data-type="{{item.song_id}}" bindtap="gotoDetail"/>
+    </swiper-item>
+  </swiper>
+  <!-- 搜索框 -->
+  <view class="weui-search-bar" bindtouchend="goSearch">
+    <view class="weui-search-bar__form">
+      <view class="weui-search-bar__box">
+        <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" bindinput="inputTyping" />
+      </view>
+      <label class="weui-search-bar__label">
+        <icon class="weui-icon-search" type="search" size="14"></icon>
+        <view class="weui-search-bar__text">{{keyword}}</view>
+      </label>
+    </view>
+  </view>
+  <!-- tabBar -->
+  <view class="zy-tabbar">
+    <!-- 当前高亮 -->
+    <view class="activeLine" style="width:{{activeWidth}}px;left:{{activeWidth * activeNum}}px"></view>
+    <!-- tabBar-item -->
+    <view class="zy-tabbar-item" wx:for="{{typeList}}" wx:key="{{type}}" data-active="{{item.index}}" data-type="{{item.type}}" bindtap="changeType">
+      <view style="color:{{activeNum===item.index?'#58bc58':'#000'}}">{{item.value}}</view>
+    </view>
+  </view>
+  <!-- 图文列表组合 -->
+  <view class="weui-panel__bd">
+    <template is="panel" data="{{songList}}"/>
+  </view>
+  <!-- 更多 -->
+  <template is="more" data="{{...typeList[activeNum]}}"/>
+</view>

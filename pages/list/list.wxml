@@ -1,0 +1,11 @@
+<!-- 引入template -->
+<import src="../../utils/template.wxml"/>
+  <!-- 图文列表组合 -->
+  <view class="weui-panel__bd">
+    <template is="panel" data="{{songList}}"/>
+  </view>
+
+  <!-- 回到顶部 -->
+  <view bindtap="gotoTop" class="fixTop" hidden="{{!isfixTop}}">UP</view>
+
+

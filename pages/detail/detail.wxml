@@ -1,0 +1,30 @@
+<wxs module="m1">
+var getSize = function(size) {
+  size = size / 1024 / 1024;
+  return size.toFixed(1);
+}
+
+module.exports.getSize = getSize;
+</wxs>
+<!--pages/detail/detail.wxml-->
+<view class="detail">
+  <!-- 歌曲图片 -->
+  <image src="{{songinfo.pic_huge}}"></image>
+  <!-- 歌曲信息 -->
+  <view class="weui-panel">
+    <view class="weui-panel__hd">歌曲信息</view>
+    <view class="weui-panel__bd">
+      <view class="weui-media-box weui-media-box_text">
+        <view class="weui-media-box__title weui-media-box__title_in-text">{{songinfo.title}}</view>
+        <view class="weui-media-box__desc">唱片公司：{{songinfo.si_proxycompany}}</view>
+        <view class="weui-media-box__info">
+          <view class="weui-media-box__info__meta">歌手：{{songinfo.author}}</view>
+          <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">专辑：{{songinfo.album_title}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 下载按钮 -->
+  <button class="btn" bindtap="playSong">{{paused ? "播放":'暂停'}}</button>
+  <button class="btn" bindtap="downloadSong">歌曲下载（{{m1.getSize(bitrate.file_size)}}M）</button>
+</view>

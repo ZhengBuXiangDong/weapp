@@ -1,0 +1,15 @@
+/* pages/detail/detail.wxss */
+.detail image{
+  width: 100%;
+}
+
+.btn{
+  margin: auto;
+  margin-top: 40rpx;
+  padding: 2rpx;
+  width: 90%;
+  text-align: center;
+  color:#58bc58;
+  border: 1px solid #58bc58;
+  border-radius: 10rpx;
+}

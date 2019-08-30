@@ -1,0 +1,10 @@
+/* pages/list/list.wxss */
+.fixTop{
+  position: fixed;
+  bottom: 20rpx;
+  right: 20rpx;
+  padding: 10rpx;
+  background-color: rgba(0, 0, 0, .3);
+  color: #fff;
+  
+}
