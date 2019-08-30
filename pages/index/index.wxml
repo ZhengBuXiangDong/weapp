@@ -4,7 +4,7 @@
 <view class="container">
   <!-- 轮播图 -->
   <swiper indicator-dots="{{true}}" autoplay="{{true}}" circular="{{true}}">
-    <swiper-item wx:for="{{imgUrls}}" wx:key="*this">
+    <swiper-item wx:for="{{imgList}}" wx:key="*this">
       <image src="{{item.pic_huge}}" class="slide-image" data-type="{{item.song_id}}" bindtap="gotoDetail"/>
     </swiper-item>
   </swiper>

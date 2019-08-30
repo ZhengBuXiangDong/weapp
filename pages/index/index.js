@@ -4,34 +4,32 @@ const app = getApp()
 
 Page({
   data: {
-    imgUrls: [
-      'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
-      'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
-      'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
-    ],
+    songList: [],
+    imgList: [],
     keyword: '',
-    activeNum:'0',
-    typeList:[{
-      type:1,
-      value:'新歌',
-      index:0,
+    activeNum: '0',
+    activeWidth: 75,
+    typeList: [{
+      type: 1,
+      value: '新歌',
+      index: 0,
     }, {
-        type: 16,
-        value: '流行',
-        index: 1,
-      }, {
-        type: 21,
-        value: '欧美',
-        index: 2,
-      }, {
-        type: 25,
-        value: '网络',
-        index: 3,
-      }, {
-        type: 11,
-        value: '摇滚',
-        index: 4,
-      }]
+      type: 16,
+      value: '流行',
+      index: 1,
+    }, {
+      type: 21,
+      value: '欧美',
+      index: 2,
+    }, {
+      type: 25,
+      value: '网络',
+      index: 3,
+    }, {
+      type: 11,
+      value: '摇滚',
+      index: 4,
+    }]
   },
   //事件处理函数
   bindViewTap: function() {
@@ -39,7 +37,7 @@ Page({
       url: '../logs/logs'
     })
   },
-  cilck(e){
+  cilck(e) {
     console.log(e)
   },
   onLoad: function() {
@@ -52,17 +50,22 @@ Page({
         size: 10,
         offset: 0
       },
-      success:(res)=>{
+      success: (res) => {
         //获取当前最热门歌曲（排序）
         let hot = [...res.data.song_list];
-         hot.sort((a, b) => {
+        // console.log(hot)
+        let songList = hot.slice(0, 3);
+        let imgList = hot.slice(3, 8);
+        hot.sort((a, b) => {
           return b.hot - a.hot
         });
         // 改变原有data
         this.setData({
-          keyword:hot[0].title
+          keyword: hot[0].title,
+          songList,
+          imgList
         })
-        
+
       },
     })
   },
@@ -72,17 +75,47 @@ Page({
       url: '../search/search?keyword=' + this.data.keyword
     })
   },
-  changeType(e){
-    let {active,type} = e.currentTarget.dataset;
-    e.target.className="active";
+  changeType(e) {
+    let {
+      active,
+      type
+    } = e.currentTarget.dataset;
+    e.target.className = "active";
     this.setData({
-      activeNum:active
+      activeNum: active
     })
-    console.log( type)
+    // console.log(type)
+    wx.request({
+      url: "http://tingapi.ting.baidu.com/v1/restserver/ting",
+      data: {
+        method: "baidu.ting.billboard.billList",
+        type,
+        size: 10,
+        offset: 0
+      },
+      success: (res) => {
+        // console.log(res.data)
+        //获取当前最热门歌曲（排序）
+        let songList = [...res.data.song_list].slice(0,3);
+        // 改变原有data
+        this.setData({
+          songList,
+        })
+      }
+    })
   },
-  changeActive(e){
-    // console.log(e.target);
-    console.log(this.data.activeNum);
+  // changeActive(e){
+  //   // console.log(e.target);
+  //   console.log(this.data.activeNum);
+  // },
+  // 跳转详情页
+  gotoDetail(e) {
+    let {
+      type
+    } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: '/pages/detail/detail?id=' + type,
+    })
   }
 
 })
