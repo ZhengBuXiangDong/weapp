@@ -7,28 +7,33 @@ Page({
     songList: [],
     imgList: [],
     keyword: '',
-    activeNum: '0',
+    activeNum: 1,
     activeWidth: 75,
     typeList: [{
       type: 1,
       value: '新歌',
       index: 0,
+      title: '新歌榜'
     }, {
-      type: 16,
+      type: 2,
       value: '流行',
       index: 1,
+      title: '流行音乐'
     }, {
       type: 21,
       value: '欧美',
       index: 2,
+      title: '欧美金曲榜'
     }, {
       type: 25,
       value: '网络',
       index: 3,
+      title: '网络歌曲榜'
     }, {
       type: 11,
       value: '摇滚',
       index: 4,
+      title: '摇滚音乐榜'
     }]
   },
   //事件处理函数
@@ -96,7 +101,7 @@ Page({
       success: (res) => {
         // console.log(res.data)
         //获取当前最热门歌曲（排序）
-        let songList = [...res.data.song_list].slice(0,3);
+        let songList = [...res.data.song_list].slice(0, 3);
         // 改变原有data
         this.setData({
           songList,

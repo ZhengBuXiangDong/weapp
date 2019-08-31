@@ -35,6 +35,8 @@ App({
   },
   globalData: {
     userInfo: null,
+    player:null,
+    paused:true,
     typeList: [{
       type: 1,
       value: '新歌',

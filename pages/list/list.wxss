@@ -4,7 +4,9 @@
   bottom: 20rpx;
   right: 20rpx;
   padding: 10rpx;
-  background-color: rgba(0, 0, 0, .3);
+  background-color: rgba(0, 0, 0, .5);
   color: #fff;
-  
+}
+.margin10{
+  margin: 0 5px;
 }

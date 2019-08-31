@@ -43,17 +43,17 @@ Page({
         data
       }) => {
         let {
-          album
+          song
         } = data;
        
-        if (album) {
-          if (album.length > 8) {
-            album.length = 8
+        if (song) {
+          if (song.length > 8) {
+            song.length = 8
           }
-          let songItem = album.map((item) => {
+          let songItem = song.map((item) => {
             return {
-              title: item.albumname + ' ' + item.artistname,
-              albumid: item.albumid
+              title: item.songname + ' ' + item.artistname,
+              albumid: item.songid
             }
           })
           // console.log(songItem)
@@ -85,16 +85,14 @@ Page({
         method: "baidu.ting.search.catalogSug",
         query: options.keyword
       },
-      success: ({
-        data
-      }) => {
+      success: ({data}) => {
         let {
-          album
+          song
         } = data;
-        let songItem = album.map((item) => {
+        let songItem = song.map((item) => {
           return {
-           title: item.albumname + ' ' + item.artistname,
-           albumid: item.albumid
+            title: item.songname + ' ' + item.artistname,
+            albumid: item.songid
           }
         });
         this.setData({

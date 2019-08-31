@@ -8,7 +8,7 @@ Page({
     songinfo: {},
     bitrate: {},
     paused: true, //暂停状态
-
+    // player: null,
   },
   // 下載歌曲
   downloadSong() {
@@ -16,7 +16,7 @@ Page({
       title: '开始下载',
       icon: 'loading',
       duration: 500,
-      player: null
+      
     })
     // 数据加载成功后隐藏
     setTimeout(function() {
@@ -41,14 +41,18 @@ Page({
   },
   // 播放歌曲
   playSong() {
-    let paused = this.data.paused;
-    let player = this.data.player;
+    let { player, paused} = app.globalData;
+    let src = this.data.bitrate.file_link;
     if (!player) {
+    // 如果player为空,即新建一个player
       player = wx.createInnerAudioContext();
+      player.src = this.data.bitrate.file_link;  
+    } else if (player.src !== this.data.bitrate.file_link){
+      // 如果player不为空且换了一个detail页面，先关闭后台歌曲。
+      player.pause();
       player.src = this.data.bitrate.file_link;
-      this.setData({
-        player
-      })
+      // player.play();
+      paused = true;
     }
     // 查看播放状态
     if (paused) {
@@ -58,10 +62,14 @@ Page({
       player.pause();
     }
     // 更改
+    paused = !paused;
+    
     // console.log(player.paused)
     this.setData({
-      paused: !paused
-    })
+      paused,
+    });
+    app.globalData.player = player;
+    app.globalData.paused = paused;
   },
 
   /**
@@ -70,6 +78,8 @@ Page({
   onLoad({
     id
   }) {
+    // console.log(app.globalData.paused)
+    let { player, paused } = app.globalData;
     //根据歌曲id获取歌曲信息
     wx.request({
       url: "http://tingapi.ting.baidu.com/v1/restserver/ting",
@@ -84,14 +94,20 @@ Page({
           songinfo,
           bitrate
         } = data;
-        // console.log(data);
         this.setData({
           songinfo,
-          bitrate
-        })
+          bitrate,         
+        });
+        
+        if (player && player.src == this.data.bitrate.file_link) {
+          this.setData({
+            paused
+          })
+        }
 
       }
     });
+
   },
 
   /**
