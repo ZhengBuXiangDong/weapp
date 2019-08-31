@@ -27,6 +27,4 @@
   <!-- 下载按钮 -->
   <button class="btn" bindtap="playSong">{{paused ? "播放":'暂停'}}</button>
   <button class="btn" bindtap="downloadSong">歌曲下载（{{m1.getSize(bitrate.file_size)}}M）</button>
-
-
 </view>

@@ -1,11 +1,11 @@
 <!-- 图文列表 -->
 <template name="panel">
-  <navigator wx:for="{{songList}}" wx:key="{{album_id}}" url="/pages/detail/detail?id={{item.song_id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" >
+  <navigator wx:for="{{songList}}" wx:key="{{song_id}}" url="/pages/detail/detail?id={{item.song_id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" >
     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
       <image class="weui-media-box__thumb" src="{{item.pic_big}}" />
     </view>
     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-      <view class="weui-media-box__title">{{item.album_title}}</view>
+      <view class="weui-media-box__title">{{item.title}}</view>
       <view class="weui-media-box__desc">歌手：{{item.author}}</view>
     </view>
   </navigator>
