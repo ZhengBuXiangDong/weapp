@@ -6,11 +6,11 @@ Page({
    */
   data: {
     songList: [],
-    page: 0,
+    page: 1,
     type: '',
     hasMore: true,
-    isfixTop:false,
-  },  // 回到顶部
+    isfixTop: false,
+  }, // 回到顶部
   gotoTop() {
     wx.pageScrollTo({
       scrollTop: 0,
@@ -49,7 +49,6 @@ Page({
       },
       success: (res) => {
         let songList = res.data.song_list;
-        // console.log(songList)
         this.setData({
           songList,
         });
@@ -83,13 +82,13 @@ Page({
   },
 
   // 监听页面混动距离
-  onPageScroll: function (res) {
+  onPageScroll: function(res) {
     // console.log(res.scrollTop)
-    if (res.scrollTop > 100){
+    if (res.scrollTop > 100) {
       this.setData({
-        isfixTop:true
+        isfixTop: true
       })
-    }else{
+    } else {
       this.setData({
         isfixTop: false
       })
@@ -114,7 +113,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom() {
-    if (this.data.hasMore) {
+    if (this.data.hasMore && this.data.songList.length >= 10) {
       wx.showLoading({
         title: '玩命加载中'
       });
@@ -130,25 +129,29 @@ Page({
           offset,
         },
         success: (res) => {
-          let newSong = res.data.song_list;
-          let songList = [...this.data.songList, ...newSong]
+          // console.log(res)
+          let songList = res.data.song_list;
+          // songList == null
+          if (songList !== null) {
+            songList = [...this.data.songList, ...songList]
+          }
           this.setData({
             page,
             songList,
             // 判断是否还有歌曲数据
-            hasMore: newSong.length < size ? false : true,
+            hasMore: songList.length < size ? false : true,
           });
           // 隐藏加载中
           wx.hideLoading();
         }
       })
-    }else{
+    } else {
       wx.showToast({
         title: '已经加载全部',
       });
-      setTimeout(function(){
-          wx.hideToast();
-      },2000)
+      setTimeout(function() {
+        wx.hideToast();
+      }, 2000)
     }
   },
 
